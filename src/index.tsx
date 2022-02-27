@@ -554,7 +554,9 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
         // changing then call our own change handler to let the outside world
         // know
         if (
-          transactions.some(tr => tr.docChanged) &&
+          transactions.some(tr => tr.docChanged && !(
+            tr.getMeta("appendedTransaction") && tr.getMeta("appendedTransaction").getMeta("folding")
+          )) &&
           (!self.props.readOnly ||
             (self.props.readOnlyWriteCheckboxes &&
               transactions.some(isEditingCheckbox)))
